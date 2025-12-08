@@ -1,0 +1,48 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+type Config struct {
+	Next     *string
+	Previous *string
+}
+
+func StartRepl(cfg *Config) {
+	user_input := bufio.NewScanner(os.Stdin)
+
+	for {
+		fmt.Print("Pokedex > ")
+		user_input.Scan()
+		user_text := user_input.Text()
+		clean_text := CleanInput(user_text)
+
+		if len(clean_text) == 0 {
+			continue
+		}
+		command_name := clean_text[0]
+
+		command, exist := GetCommands()[command_name]
+		if exist {
+			err := command.callback(cfg)
+
+			if err != nil {
+				fmt.Println(err)
+			}
+			continue
+		} else {
+			fmt.Println("Unknown command")
+		}
+
+	}
+}
+
+// Funcion que recibe un str y regresa un slice str de palabras todas en minuscula
+func CleanInput(text string) []string {
+	words := strings.Fields(strings.ToLower(text))
+	return words
+}
