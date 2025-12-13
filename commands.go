@@ -37,6 +37,11 @@ func GetCommands() map[string]cliCommand {
 			description: "Display the names of the previous 20 locations",
 			callback:    CommandMapb,
 		},
+		"explore":{
+			name: "explore",
+			description:  "Display a list of all the Pokemon located in the location specified",
+			callback: Explore,
+		}
 	}
 }
 
@@ -98,5 +103,9 @@ func CommandMapb(cfg *Config) error {
 	}
 
 	return nil
+
+}
+
+func Explore(location string){
 
 }
