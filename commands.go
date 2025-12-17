@@ -122,6 +122,7 @@ func CommandMapb(cfg *Config, arg []string) error {
 
 }
 
+// Funcion comando que entrega una lista de los pokemones que hayan en una localizacion
 func Explore(cfg *Config, args []string) error {
 	if len(args) < 1 {
 		return fmt.Errorf("usage: explore <location>")
@@ -144,6 +145,7 @@ func Explore(cfg *Config, args []string) error {
 	return nil
 }
 
+// Funcion comando que captura los pokemos en base de la experiencia del pokemon
 func Catch(cfg *Config, args []string) error {
 	if len(args) < 1 {
 		return fmt.Errorf("usage: catch <Pokemon`s name>")
@@ -173,8 +175,13 @@ func Catch(cfg *Config, args []string) error {
 	return nil
 }
 
-func Inspect(cfg *Config, arg []string) error {
-	poke_name := arg[0]
+// Funcion comando que permite inspeccionar los stats de un pokemon que se tenga capturado
+func Inspect(cfg *Config, args []string) error {
+	if len(args) < 1 {
+		return fmt.Errorf("usage: catch <Pokemon`s name>")
+	}
+
+	poke_name := args[0]
 	if pokemon, ok := cfg.Pokedex[poke_name]; !ok {
 		return fmt.Errorf("you have not caught that pokemon")
 	} else {
@@ -197,6 +204,7 @@ func Inspect(cfg *Config, arg []string) error {
 
 }
 
+// Funcion comando que permite ver los pokemons que hayan capturado
 func Pokedex(cfg *Config, arg []string) error {
 	fmt.Printf("Your Pokedex:\n")
 	for _, pokemon := range cfg.Pokedex {

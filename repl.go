@@ -15,6 +15,7 @@ type Config struct {
 	Pokedex  map[string]pokeapi.Pokemon
 }
 
+// Funcion que inicia el REPL y maneja los inputs del usuario
 func StartRepl(cfg *Config) {
 	user_input := bufio.NewScanner(os.Stdin)
 

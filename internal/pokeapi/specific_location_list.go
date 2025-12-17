@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// Funcion que realiza una solocitacion GET HTTP para regresar un specific_location
 func Specific_location_list(location string) (specific_location, error) {
 
 	url := "https://pokeapi.co/api/v2/location-area/" + location

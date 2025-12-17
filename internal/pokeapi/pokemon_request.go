@@ -7,6 +7,7 @@ import (
 	"net/http"
 )
 
+// Funcion que realiza una solicitacion GET HTTP para la informacion de un pokemon, regresa una variable Pokemon
 func Request_pokemon(poke_name string) (Pokemon, error) {
 
 	url := "https://pokeapi.co/api/v2/pokemon/" + poke_name
