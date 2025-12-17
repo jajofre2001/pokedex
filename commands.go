@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"os"
 
 	"github.com/jajofre2001/pokedex/internal/pokeapi"
@@ -41,6 +42,16 @@ func GetCommands() map[string]cliCommand {
 			name:        "explore",
 			description: "Display a list of all the Pokemon located in the location specified",
 			callback:    Explore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Try to capture a Pokemon",
+			callback:    Catch,
+		},
+		"inspect": {
+			name:        "inspect",
+			description: "Inspect the pokemos you had capture",
+			callback:    Inspect,
 		},
 	}
 }
@@ -126,4 +137,56 @@ func Explore(cfg *Config, args []string) error {
 		fmt.Printf("-%s\n", pokemon.Pokemon.Name)
 	}
 	return nil
+}
+
+func Catch(cfg *Config, args []string) error {
+	if len(args) < 1 {
+		return fmt.Errorf("usage: catch <Pokemon`s name>")
+	}
+	poke_name := args[0]
+
+	pokemon, err := pokeapi.Request_pokemon(poke_name)
+
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Throwing a Pokeball at %s\n", poke_name)
+
+	// Ver como implementar la posibilidad de captura
+	chances := 1.0 / (1.0 + float64(pokemon.BaseExperience)/50.0)
+	roll := rand.Float64()
+
+	if roll < chances {
+		fmt.Printf("%s was caught!\n", poke_name)
+		cfg.Pokedex[poke_name] = pokemon
+
+	} else {
+		fmt.Printf("%s escaped\n", poke_name)
+	}
+	return nil
+}
+
+func Inspect(cfg *Config, arg []string) error {
+	poke_name := arg[0]
+	if pokemon, ok := cfg.Pokedex[poke_name]; !ok {
+		return fmt.Errorf("you have not caught that pokemon")
+	} else {
+
+		fmt.Printf("Name: %s\n", poke_name)
+		fmt.Printf("Height: %d\n", pokemon.Height)
+		fmt.Printf("Weight: %d\n", pokemon.Weight)
+		fmt.Printf("Stats:\n")
+		for _, stat := range pokemon.Stats {
+			fmt.Printf("  -%s: %d\n", stat.Stat.Name, stat.BaseStat)
+		}
+
+		fmt.Printf("Types:\n")
+		for _, tipo := range pokemon.Types {
+			fmt.Printf("  -%s\n", tipo.Type.Name)
+		}
+
+	}
+	return nil
+
 }

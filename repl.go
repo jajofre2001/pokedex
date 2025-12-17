@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/jajofre2001/pokedex/internal/pokeapi"
 )
 
 type Config struct {
 	Next     *string
 	Previous *string
+	Pokedex  map[string]pokeapi.Pokemon
 }
 
 func StartRepl(cfg *Config) {
