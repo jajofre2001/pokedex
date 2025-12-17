@@ -178,7 +178,7 @@ func Catch(cfg *Config, args []string) error {
 // Funcion comando que permite inspeccionar los stats de un pokemon que se tenga capturado
 func Inspect(cfg *Config, args []string) error {
 	if len(args) < 1 {
-		return fmt.Errorf("usage: catch <Pokemon`s name>")
+		return fmt.Errorf("usage: inspect <Pokemon`s name>")
 	}
 
 	poke_name := args[0]
