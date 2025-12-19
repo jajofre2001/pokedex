@@ -158,7 +158,7 @@ func Catch(cfg *Config, args []string) error {
 		return err
 	}
 
-	fmt.Printf("Throwing a Pokeball at %s\n", poke_name)
+	fmt.Printf("Throwing a Pokeball at %s...\n", poke_name)
 
 	// Ver como implementar la posibilidad de captura
 	chances := 1.0 / (1.0 + float64(pokemon.BaseExperience)/50.0)
